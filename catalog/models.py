@@ -12,8 +12,8 @@ class Product(models.Model):
     preview = models.ImageField(upload_to='product/', verbose_name='превью', null=True, blank=True)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     purchase_price = models.IntegerField()
-    date_creation = models.DateTimeField(auto_now = True , auto_now_add = False)
-    date_modified = models.DateTimeField(auto_now = False , auto_now_add = True)
+    date_creation = models.DateTimeField(auto_now_add = True)
+    date_modified = models.DateTimeField(auto_now = True)
 
     def __str__(self):
         # Строковое отображение объекта
@@ -40,7 +40,7 @@ class Category(models.Model):
 
     def __str__(self):
         # Строковое отображение объекта
-        return f'{self.title}'
+        return self.title
 
     class Meta:
         verbose_name = 'категория' # Настройка для наименования одного объекта
