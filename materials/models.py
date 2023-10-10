@@ -11,7 +11,7 @@ class Material(models.Model):
     preview = models.ImageField(upload_to='product/', null=True, blank=True, verbose_name='превью')
     date_creation = models.DateTimeField(default=timezone.now, verbose_name='дата')
     published = models.BooleanField(default=True, verbose_name='статус')
-    counter_views = models.IntegerField(default=0, verbose_name='счетчик')
+    counter_views = models.PositiveIntegerField(default=0, verbose_name='счетчик')
 
 
     def __str__(self):

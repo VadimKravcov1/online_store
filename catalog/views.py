@@ -27,14 +27,19 @@ def contacts(request):
     return render(request, 'catalog/testsecond_contacts.html', context)
 
 
-def merchandise(request):
-    product_list = Product.objects.all()
+class MerchandiseListView(ListView):
+    model = Product
+    template_name = 'catalog/merchandise.html'
 
-    context = {
-        'object_list':product_list
-    }
 
-    return render(request, 'catalog/merchandise.html', context)
+# def merchandise(request):
+#     product_list = Product.objects.all()
+#
+#     context = {
+#         'object_list':product_list
+#     }
+#
+#     return render(request, 'catalog/merchandise.html', context)
 
 
 
