@@ -1,19 +1,21 @@
 from django.db import models
-
+from django.utils import timezone
 # Create your models here.
 
+NULLABLE = {'blank':True,'null':True}
 
 class Product(models.Model):
     # first_name = models.CharField(max_length=150, verbose_name='имя')
     # last_name = models.CharField(max_length=150, verbose_name='фамилия')
 
-    title = models.CharField(max_length=100, verbose_name='название')
-    description = models.TextField()
+    title = models.CharField(max_length=100, verbose_name='название', unique=True, **NULLABLE)
+    description = models.TextField(unique=True, **NULLABLE)
     preview = models.ImageField(upload_to='product/', verbose_name='превью', null=True, blank=True)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
-    purchase_price = models.IntegerField()
-    date_creation = models.DateTimeField(auto_now_add = True)
-    date_modified = models.DateTimeField(auto_now = True)
+    purchase_price = models.PositiveIntegerField(default=0, verbose_name='цена')
+    date_creation = models.DateTimeField(default=timezone.now, verbose_name='дата создания')
+    date_modified = models.DateTimeField(default=timezone.now, verbose_name='дата изменения')
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         # Строковое отображение объекта
@@ -47,3 +49,20 @@ class Category(models.Model):
         verbose_name_plural = 'категории'
 
 
+
+
+class Version(models.Model):
+
+    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+    version_number = models.PositiveIntegerField(default=0, verbose_name='номер версии')
+    version_name = models.CharField(max_length=100, verbose_name='название версии')
+    is_active_version = models.BooleanField(default=True, verbose_name='статус версии')
+
+    def __str__(self):
+        # Строковое отображение объекта
+        return self.version_name
+
+
+    class Meta:
+        verbose_name = 'версия' # Настройка для наименования одного объекта
+        verbose_name_plural = 'версии'

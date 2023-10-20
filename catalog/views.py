@@ -1,13 +1,16 @@
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy, reverse
+
 from catalog.models import Product
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.shortcuts import redirect
 
-
+from catalog.forms import ProductForm
 
 
 class ProductListView(ListView):
     model = Product
-    template_name = 'catalog/testmain.html'
+    # template_name = 'catalog/testmain.html'
 
 
 # def index(request):
@@ -45,7 +48,7 @@ class MerchandiseListView(ListView):
 
 class ProductDetailView(DetailView):
     model = Product
-    template_name = "catalog/view_product.html"
+    # template_name = "catalog/view_product.html" - view_product
 
 
 # def view_product(request, pk):
@@ -56,6 +59,44 @@ class ProductDetailView(DetailView):
 #     return render(request, "catalog/view_product.html", context)
 
 
+# class ProductCreateView(CreateView):
+#     model = Product
+#     fields = ('title', 'description', 'preview', 'category', 'purchase_price', 'date_creation', 'date_modified')
+#     success_url = reverse_lazy('catalog:merchandise')
 
 
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('catalog:merchandise')
+
+
+# class ProductUpdateView(UpdateView):
+#     model = Product
+#     fields = ('title', 'description', 'preview', 'category', 'purchase_price', 'date_creation', 'date_modified')
+#     success_url = reverse_lazy('catalog:merchandise')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('catalog:merchandise')
+
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = reverse_lazy('catalog:merchandise')
+
+
+
+def toggle_activity(request, pk):
+    product_item = get_object_or_404(Product,pk=pk)
+    if product_item.is_active:
+        product_item.is_active = False
+    else:
+        product_item.is_active = True
+    product_item.save()
+
+    return redirect(reverse('catalog:merchandise'))
 
