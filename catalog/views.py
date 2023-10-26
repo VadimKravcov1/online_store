@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 
 from catalog.forms import ProductForm, VersionForm
 from catalog.models import Version
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class ProductListView(ListView):
     model = Product
@@ -73,10 +73,14 @@ class ProductDetailView(DetailView):
 #     success_url = reverse_lazy('catalog:merchandise')
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:merchandise')
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
 
 
 # class ProductUpdateView(UpdateView):

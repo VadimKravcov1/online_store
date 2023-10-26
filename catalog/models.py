@@ -1,8 +1,9 @@
 from django.db import models
 from django.utils import timezone
+from users.models import User
 # Create your models here.
 
-NULLABLE = {'blank':True,'null':True}
+NULLABLE = {'blank':True, 'null':True}
 
 class Product(models.Model):
     # first_name = models.CharField(max_length=150, verbose_name='имя')
@@ -16,6 +17,7 @@ class Product(models.Model):
     date_creation = models.DateTimeField(default=timezone.now, verbose_name='дата создания')
     date_modified = models.DateTimeField(default=timezone.now, verbose_name='дата изменения')
     is_active = models.BooleanField(default=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец', **NULLABLE)
 
     def __str__(self):
         # Строковое отображение объекта

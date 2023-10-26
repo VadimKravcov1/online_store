@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'catalog',
     'materials',
+    'users',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -136,3 +137,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+AUTH_USER_MODEL = 'users.User'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# EMAIL_HOST='smtp.yandex.ru'
+# EMAIL_PORT=465
+# EMAIL_HOST_USER='v.testemail@yandex.ru'
+# EMAIL_HOST_PASSWORD='123qwe456rtyF***'
+# EMAIL_USE_SSL=True
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "v.testemail@yandex.ru"
+EMAIL_HOST_PASSWORD = "iabhmsyizxfkjqll"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+

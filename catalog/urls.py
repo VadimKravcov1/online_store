@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from catalog.views import contacts, ProductListView, ProductDetailView, MerchandiseListView,\
     ProductCreateView, ProductUpdateView, ProductDeleteView, toggle_activity
 
@@ -18,5 +18,6 @@ urlpatterns = [
     # path('create/', ProductCreateView.as_view(), name = 'create_product'),
     # path('edit/<int:pk>/', ProductUpdateView.as_view(), name = 'update_product'),
     path('delete/<int:pk>/', ProductDeleteView.as_view(), name = 'delete_product'),
-    path('activity/<int:pk>/', toggle_activity, name = 'toggle_activity')
+    path('activity/<int:pk>/', toggle_activity, name = 'toggle_activity'),
+
 ]
